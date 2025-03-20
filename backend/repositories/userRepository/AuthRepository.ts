@@ -1,18 +1,23 @@
 import { IUserAuthRepositoryMethods } from "../../interface/repository.interface/user.repository.interface"
 import { IUser, UserLoginInput } from "../../src/types/user.types"
-import BaseRepository from "../base.repository"
+import { user_email, user_pass } from "../../src/utils/constant";
 
 
 export default class UserAuthRepository implements IUserAuthRepositoryMethods {
-    userLogin(email: string, password: string): Promise<IUser> {
+    userLogin(email: string, password: string): IUser {
         try {
-
+            if (email === user_email && password === user_pass) {
+                return {
+                    email
+                }
+            } else {
+                throw new Error("Invalid credentials");
+            }
         } catch (error) {
-            throw error
+            throw error;
         }
-        throw new Error("Method not implemented.")
     }
-    userLogout(data: UserLoginInput): Promise<IUser> {
+    userLogout(data: UserLoginInput): IUser {
         throw new Error("Method not implemented.")
     }
 
