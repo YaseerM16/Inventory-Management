@@ -1,5 +1,5 @@
-import { IUserAuthServicesMethods } from "../../../interface/service.Interface/user.service.interface";
-import UserAuthRepository from "../../../repositories/userRepository/AuthRepository";
+import { IUserAuthServicesMethods } from "../../interface/service.Interface/user.service.interface";
+import UserAuthRepository from "../../repositories/userRepository/auth.repository";
 import { UserLoginInput, IUser } from "../../types/user.types";
 
 export default class UserAuthServices implements IUserAuthServicesMethods {

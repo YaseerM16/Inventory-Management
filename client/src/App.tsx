@@ -7,6 +7,8 @@ import {
   // Navigate,
 } from "react-router-dom"
 import Login from './pages/user/Login';
+import Home from './pages/Home';
+import ViewInventory from './pages/inventory/ViewInventory';
 
 function App() {
 
@@ -17,7 +19,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={user.email ? <></> : <Login />} />
+        <Route path="/" element={user.email ? <Home /> : <Login />} />
+        <Route path="/inventory/view" element={user.email ? <ViewInventory /> : <Login />} />
       </Routes>
       {/* <Login></Login> */}
     </>

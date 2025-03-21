@@ -1,6 +1,6 @@
 import { IUserAuthRepositoryMethods } from "../../interface/repository.interface/user.repository.interface"
-import { IUser, UserLoginInput } from "../../src/types/user.types"
-import { user_email, user_pass } from "../../src/utils/constant";
+import { IUser, UserLoginInput } from "../../types/user.types"
+import { user_email, user_pass } from "../../utils/constant";
 
 
 export default class UserAuthRepository implements IUserAuthRepositoryMethods {

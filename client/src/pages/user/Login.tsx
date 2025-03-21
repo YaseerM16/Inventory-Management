@@ -1,20 +1,58 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { loginApi } from "../../services/userApi";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store/TypedHooks";
+import { userLogin } from "../../store/slices/UserSlice";
 
-type FormValues = {
+export type FormValues = {
     email: string;
     password: string;
 };
 
 const Login: React.FC = () => {
+    const navigate = useNavigate()
+    const dispatcher = useAppDispatch()
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<FormValues>();
 
-    const onSubmit = (data: FormValues) => {
-        console.log("Login Data:", data);
+    const onSubmit = async (data: FormValues) => {
+        try {
+            const response = await loginApi(data)
+            if (response?.status === 200) {
+                const { data } = response
+                dispatcher(userLogin(data.data))
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Success!",
+                    text: "Login successful.",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    toast: true,
+                }).then(() => {
+                    navigate("/");
+                });
+            }
+
+        } catch (err) {
+            console.log("Login Error:", err);
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Error!",
+                text: (err as Error)?.message || "Something went wrong. Please try again.",
+                showConfirmButton: true,
+                confirmButtonText: "OK",
+                timer: 3000,
+                toast: true,
+            });
+        }
     };
 
     return (

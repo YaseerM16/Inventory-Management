@@ -1,0 +1,12 @@
+/* Custom Spinner Size (Optional) */
+.spinner-border {
+    width: 4rem;
+    height: 4rem;
+    border-width: 0.25em;
+}
+
+/* Custom Spinner Color (Optional) */
+.text-primary {
+    color: #3498db !important;
+    /* Change to your preferred color */
+}

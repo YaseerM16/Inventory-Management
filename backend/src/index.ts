@@ -1,9 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB } from './config/db.config';
 import morgan from 'morgan';
-import { userRouter } from '../routes/user.routes';
 import cors from "cors"
+import { connectDB } from './config/db.config';
+import { userRouter } from './routes/user.routes';
 dotenv.config()
 
 const app = express()
