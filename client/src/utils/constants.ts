@@ -5,3 +5,10 @@ export interface IProduct {
     quantity: number;
     price: number;
 }
+
+export interface ICustomer {
+    _id: string;
+    name: string;
+    address: string;
+    phone: number;
+}

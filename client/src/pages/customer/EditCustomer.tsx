@@ -1,47 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { editProductApi } from "../../services/productApi";
+import { editCustomerApi } from "../../services/customerApi";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
-import { IProduct } from "../../utils/constants";
+import { ICustomer } from "../../utils/constants";
 
-interface EditProductProps {
-    product: IProduct;
+interface EditCustomerProps {
+    customer: ICustomer;
     onClose: () => void;
-    onUpdateProduct: (updatedProduct: IProduct) => void
+    onUpdateCustomer: (updatedCustomer: ICustomer) => void;
 }
 
-const EditProduct: React.FC<EditProductProps> = ({ product, onClose, onUpdateProduct }) => {
+const EditCustomer: React.FC<EditCustomerProps> = ({ customer, onClose, onUpdateCustomer }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset
-    } = useForm<IProduct>();
+    } = useForm<ICustomer>();
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    // Pre-fill the form with the selected product details when the component mounts
     useEffect(() => {
-        reset(product);
-    }, [product, reset]);
+        reset(customer);
+    }, [customer, reset]);
 
-    const onSubmit: SubmitHandler<IProduct> = async (data) => {
+    const onSubmit: SubmitHandler<ICustomer> = async (data) => {
         try {
             setLoading(true);
-            const response = await editProductApi(product._id, data); // Pass product ID and updated data
+            const response = await editCustomerApi(customer._id, data);
             if (response?.status === 200) {
-                const { data } = response
-                console.log("Product Updated:", response.data);
-                onUpdateProduct(data.data)
-                reset(); // Reset form after submission
-                onClose(); // Close modal
+                const { data } = response;
+                console.log("Customer Updated:", response.data);
+                onUpdateCustomer(data.data);
+                reset();
+                onClose();
                 setLoading(false);
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
                     title: "Success!",
-                    text: "Product has been updated successfully!",
+                    text: "Customer details have been updated successfully!",
                     showConfirmButton: false,
                     timer: 2000,
                     toast: true,
@@ -64,15 +63,15 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onClose, onUpdatePro
 
     return (
         <div className="container p-4 shadow rounded bg-white" style={{ maxWidth: "750px", minWidth: "700px" }}>
-            <h3 className="mb-3 text-center">Edit Product</h3>
+            <h3 className="mb-3 text-center">Edit Customer</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* Name Field */}
                 <div className="mb-3">
-                    <label className="form-label">Product Name</label>
+                    <label className="form-label">Name</label>
                     <input
                         className="form-control"
                         {...register("name", {
-                            required: "Name is required",
+                            required: "Full name is required",
                             minLength: {
                                 value: 4,
                                 message: "Name must be at least 4 characters long.",
@@ -82,60 +81,47 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onClose, onUpdatePro
                                 message: "Name cannot have leading/trailing spaces or multiple spaces between words",
                             },
                         })}
-                        placeholder="Enter product name"
+                        placeholder="Enter name"
                     />
                     {errors.name && <small className="text-danger">{errors.name.message}</small>}
                 </div>
 
-                {/* Description Field */}
+                {/* Address Field */}
                 <div className="mb-3">
-                    <label className="form-label">Description</label>
+                    <label className="form-label">Address</label>
                     <textarea
                         className="form-control"
-                        {...register("description", {
-                            required: "Description is required",
-                            minLength: {
+                        {...register("address", {
+                            required: "Address is required", minLength: {
                                 value: 10,
-                                message: "Description must be at least 10 characters long.",
+                                message: "Address must be at least 10 characters long.",
                             },
                             pattern: {
                                 value: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
-                                message: "Description cannot have leading/trailing spaces or multiple spaces between words",
+                                message: "Address cannot have leading/trailing spaces or multiple spaces between words",
                             },
                         })}
-                        placeholder="Enter product description"
+                        placeholder="Enter address"
                     />
-                    {errors.description && <small className="text-danger">{errors.description.message}</small>}
+                    {errors.address && <small className="text-danger">{errors.address.message}</small>}
                 </div>
 
-                {/* Quantity Field */}
+                {/* Phone Field */}
                 <div className="mb-3">
-                    <label className="form-label">Quantity</label>
+                    <label className="form-label">Phone</label>
                     <input
-                        type="number"
+                        type="tel"
                         className="form-control"
-                        {...register("quantity", {
-                            required: "Quantity is required",
-                            min: { value: 1, message: "Quantity must be at least 1" },
+                        {...register("phone", {
+                            required: "Phone number is required",
+                            pattern: {
+                                value: /^[0-9]{10}$/,
+                                message: "Phone number must be exactly 10 digits",
+                            },
                         })}
-                        placeholder="Enter quantity"
+                        placeholder="Enter phone number"
                     />
-                    {errors.quantity && <small className="text-danger">{errors.quantity.message}</small>}
-                </div>
-
-                {/* Price Field */}
-                <div className="mb-3">
-                    <label className="form-label">Price ($)</label>
-                    <input
-                        type="number"
-                        className="form-control"
-                        {...register("price", {
-                            required: "Price is required",
-                            min: { value: 1, message: "Price must be at least ₹1" },
-                        })}
-                        placeholder="Enter price"
-                    />
-                    {errors.price && <small className="text-danger">{errors.price.message}</small>}
+                    {errors.phone && <small className="text-danger">{errors.phone.message}</small>}
                 </div>
 
                 {/* Submit & Cancel Buttons */}
@@ -144,7 +130,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onClose, onUpdatePro
                         Cancel
                     </button>
                     <button type="submit" className="btn btn-primary d-flex align-items-center justify-content-center" disabled={loading}>
-                        {loading ? <Spinner /> : "Update Product"}
+                        {loading ? <Spinner /> : "Update Customer"}
                     </button>
                 </div>
             </form>
@@ -152,4 +138,4 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onClose, onUpdatePro
     );
 };
 
-export default EditProduct;
+export default EditCustomer;

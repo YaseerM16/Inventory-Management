@@ -14,3 +14,9 @@ export type productInput = {
     quantity: number;
     price: number;
 }
+
+export type customerInput = {
+    name: string;
+    address: string;
+    phone: number;
+}
