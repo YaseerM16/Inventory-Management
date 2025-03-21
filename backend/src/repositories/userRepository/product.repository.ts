@@ -14,7 +14,7 @@ export default class ProductRepository extends BaseRepository<{
 
     async getProducts(query: any): Promise<{ products: IProduct[], totalProducts: number }> {
         try {
-            const { page = 1, limit = 10, search } = query;
+            const { page = 1, limit = 6, search } = query;
 
             const queryObj: any = {
                 isDeleted: false,

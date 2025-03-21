@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { addProductApi } from "../../services/userApi";
+import { addProductApi } from "../../services/productApi";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
 import { IProduct } from "../../utils/constants";
@@ -85,11 +85,11 @@ const AddProduct: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                         {...register("description", {
                             required: "Description is required", minLength: {
                                 value: 10,
-                                message: "Name must be at least 10 characters long.",
+                                message: "Description must be at least 10 characters long.",
                             },
                             pattern: {
                                 value: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
-                                message: "Name cannot have leading/trailing spaces or multiple spaces between words",
+                                message: "Description cannot have leading/trailing spaces or multiple spaces between words",
                             },
                         })}
                         placeholder="Enter product description"

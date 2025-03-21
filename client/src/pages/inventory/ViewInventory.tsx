@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import AddProduct from "./AddProduct";
-import { deleteProductApi, getProductsApi } from "../../services/userApi";
+import { deleteProductApi, getProductsApi } from "../../services/productApi";
 import Swal from "sweetalert2";
 import Spinner from "../../components/Spinner";
 import { IProduct } from "../../utils/constants";

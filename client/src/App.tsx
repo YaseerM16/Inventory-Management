@@ -9,6 +9,7 @@ import {
 import Login from './pages/user/Login';
 import Home from './pages/Home';
 import ViewInventory from './pages/inventory/ViewInventory';
+import ViewCustomers from './pages/customer/ViewCustomers';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={user.email ? <Home /> : <Login />} />
         <Route path="/inventory/view" element={user.email ? <ViewInventory /> : <Login />} />
+        <Route path="/inventory/customers" element={user.email ? <ViewCustomers /> : <Login />} />
       </Routes>
       {/* <Login></Login> */}
     </>

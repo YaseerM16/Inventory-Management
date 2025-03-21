@@ -29,8 +29,8 @@ export default class ProductServices implements IProductServiceMethods {
 
     async deleteProduct(productId: string): Promise<IProduct> {
         try {
-            const addProduct = await this.productRepository.deleteProduct(productId)
-            return addProduct as IProduct
+            const updatedProduct = await this.productRepository.deleteProduct(productId)
+            return updatedProduct as IProduct
         } catch (error: unknown) {
             throw error
         }
