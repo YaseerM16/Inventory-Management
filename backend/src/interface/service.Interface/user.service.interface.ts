@@ -1,4 +1,4 @@
-import { IUser, UserLoginInput } from "../../src/types/user.types"
+import { IUser, UserLoginInput } from "../../types/user.types"
 
 export interface IUserAuthServicesMethods {
     userLogout(data: UserLoginInput): IUser

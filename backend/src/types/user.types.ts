@@ -7,3 +7,10 @@ export type UserLoginInput = {
 export type IUser = {
     email: string,
 }
+
+export type productInput = {
+    name: string;
+    description: string;
+    quantity: number;
+    price: number;
+}

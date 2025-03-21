@@ -1,5 +1,5 @@
-import UserAuthServices, { userAuthServices } from "../../src/services/userServices/AuthService"
-import { sendErrorResponse, sendResponse } from "../../src/utils/ResponseHandler"
+import UserAuthServices, { userAuthServices } from "../../services/userServices/auth.service"
+import { sendErrorResponse, sendResponse } from "../../utils/ResponseHandler"
 import { Request, Response } from "express";
 
 export default class UserAuthController {
