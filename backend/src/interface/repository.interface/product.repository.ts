@@ -6,4 +6,5 @@ export interface IProductMethods {
     addProduct(data: productInput): Promise<IProduct>
     editProduct(productId: string, data: productInput): Promise<IProduct>
     deleteProduct(productId: string): Promise<IProduct>
+    updateStock(productId: string, newStock: number): Promise<void>
 }

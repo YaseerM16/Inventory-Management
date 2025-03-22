@@ -20,3 +20,13 @@ export type customerInput = {
     address: string;
     phone: number;
 }
+
+export type salesInput = {
+    saleId: string;
+    productName: string;
+    customerName: string; // Optional for cash sales
+    quantity: number;
+    price: number;
+    date: Date;
+}
+
