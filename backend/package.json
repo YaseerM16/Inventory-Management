@@ -15,14 +15,19 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "from": "^0.1.7",
+    "fs": "^0.0.1-security",
     "import": "^0.0.6",
     "mongoose": "^8.12.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.10.0",
+    "pdfkit": "^0.16.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/morgan": "^1.9.9",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pdfkit": "^0.13.9",
     "i": "^0.3.7",
     "npm": "^11.2.0",
     "ts-node": "^10.9.2",

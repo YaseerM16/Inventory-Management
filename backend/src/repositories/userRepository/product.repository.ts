@@ -12,37 +12,41 @@ export default class ProductRepository extends BaseRepository<{
         })
     }
 
-    async getProducts(query: any): Promise<{ products: IProduct[], totalProducts: number }> {
+    async getProducts(query: any = {}): Promise<{ products: IProduct[], totalProducts: number }> {
         try {
-            const { page = 1, limit = 6, search } = query;
+            let { page, limit, search } = query;
 
-            const queryObj: any = {
-                isDeleted: false,
-                ...(search && {
-                    $or: [
-                        { name: { $regex: search, $options: "i" } },
-                        { description: { $regex: search, $options: "i" } }
-                    ]
-                })
-            };
+            // Convert values to numbers and handle undefined cases
+            page = Number(page) > 0 ? Number(page) : undefined;
+            limit = Number(limit) > 0 ? Number(limit) : undefined;
 
+            // Construct query object
+            const queryObj: any = { isDeleted: false };
 
             if (search) {
-                queryObj.name = { $regex: search, $options: "i" };
+                queryObj.$or = [
+                    { name: { $regex: search, $options: "i" } },
+                    { description: { $regex: search, $options: "i" } }
+                ];
             }
 
             const totalProducts = await this.findAll("Product", queryObj).countDocuments();
 
-            const products = await this.findAll("Product", queryObj)
-                .sort({ createdAt: -1 })
-                .skip((page - 1) * limit)
-                .limit(parseInt(limit, 10));
+            let productQuery = this.findAll("Product", queryObj).sort({ createdAt: -1 });
+
+            // Apply pagination only if page and limit are defined
+            if (page && limit) {
+                productQuery = productQuery.skip((page - 1) * limit).limit(limit);
+            }
+
+            const products = await productQuery;
 
             return { products, totalProducts };
         } catch (error) {
             throw error;
         }
     }
+
 
     async addProduct(data: productInput): Promise<IProduct> {
         try {
@@ -111,6 +115,18 @@ export default class ProductRepository extends BaseRepository<{
             }
 
             return updatedProduct;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateStock(productId: string, newStock: number): Promise<void> {
+        try {
+            const existingProduct = await this.findById("Product", productId);
+            if (!existingProduct) {
+                throw new Error("Product not found");
+            }
+            await this.updateById("Product", productId, { quantity: newStock });
         } catch (error) {
             throw error;
         }

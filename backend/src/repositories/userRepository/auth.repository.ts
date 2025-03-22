@@ -1,12 +1,12 @@
 import { IUserAuthRepositoryMethods } from "../../interface/repository.interface/user.repository.interface"
 import { IUser, UserLoginInput } from "../../types/user.types"
-import { user_email, user_pass } from "../../utils/constant";
+import { config } from "../../utils/constant";
 
 
 export default class UserAuthRepository implements IUserAuthRepositoryMethods {
     userLogin(email: string, password: string): IUser {
         try {
-            if (email === user_email && password === user_pass) {
+            if (email === config.user_email && password === config.user_pass) {
                 return {
                     email
                 }

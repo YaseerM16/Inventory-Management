@@ -14,7 +14,7 @@ export const addCustomerApi = async (data: ICustomer) => {
     }
 };
 
-export const getCustomersApi = async (page: number, limit: number, query: string) => {
+export const getCustomersApi = async (page: number | undefined, limit: number | undefined, query: string | undefined) => {
     try {
         const response = await axiosInstance.get(`/customers?page=${page}&limit=${limit}&search=${query}`);
         return response;

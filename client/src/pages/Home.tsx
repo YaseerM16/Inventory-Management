@@ -26,8 +26,11 @@ const Home: React.FC = () => {
                     <button className="btn btn-success w-50 my-2" onClick={() => navigate("/inventory/add")}>
                         ➕ Add New Item
                     </button>
-                    <button className="btn btn-info w-50 my-2" onClick={() => navigate("/inventory/update")}>
-                        ✏️ Update Inventory
+                    <button className="btn btn-secondary w-50 my-2" onClick={() => navigate("/inventory/sales-records")}>
+                        📊 Sales Records
+                    </button>
+                    <button className="btn btn-secondary w-50 my-2" onClick={() => navigate("/inventory/sales-reports")}>
+                        📊 Sales Reports
                     </button>
                     <button className="btn btn-warning w-50 my-2" onClick={() => navigate("/inventory/reports")}>
                         📊 Inventory Reports

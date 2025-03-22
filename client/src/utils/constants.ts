@@ -12,3 +12,19 @@ export interface ICustomer {
     address: string;
     phone: number;
 }
+
+export interface ISale {
+    saleId: string;
+    productName: string;
+    customerName: string;
+    quantity: number;
+    price: number;
+    date: Date;
+}
+
+export interface ISalesInput {
+    customerId: string,
+    productId: string,
+    date: Date | "",
+    quantity: number
+}
