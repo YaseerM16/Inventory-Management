@@ -14,8 +14,6 @@ export const axiosInstance = axios.create({
 });
 
 
-/////////////   Auth   //////////////
-
 export const loginApi = async (loginData: FormValues) => {
     try {
         const response = await axiosInstance.post(`/login`, loginData);
