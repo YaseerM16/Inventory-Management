@@ -9,6 +9,8 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 import { useAppSelector } from "../../store/TypedHooks";
+import Navbar from "../../components/Navbar";
+
 
 const columns = ["Name", "Description", "Quantity", "Price"];
 
@@ -70,30 +72,33 @@ const ItemsReport: React.FC = () => {
     };
 
     return (
-        <div className="container mt-4">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2>Inventory List</h2>
-                <div>
-                    <button className="btn btn-primary me-2" onClick={exportToPDF}>Export PDF</button>
-                    <button className="btn btn-success me-2" onClick={exportToExcel}>Export Excel</button>
-                    <button className="btn btn-warning me-2" onClick={sendItemsReportEmail}>Send Email</button>
-                    <button className="btn btn-secondary" onClick={() => window.print()}>Print</button>
+        <>
+            <Navbar />
+            <div className="container mt-4">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h2>Inventory List</h2>
+                    <div>
+                        <button className="btn btn-primary me-2" onClick={exportToPDF}>Export PDF</button>
+                        <button className="btn btn-success me-2" onClick={exportToExcel}>Export Excel</button>
+                        <button className="btn btn-warning me-2" onClick={sendItemsReportEmail}>Send Email</button>
+                        <button className="btn btn-secondary" onClick={() => window.print()}>Print</button>
+                    </div>
                 </div>
+                {loading ? (
+                    <Spinner />
+                ) : (
+                    <Table columns={columns} data={products} renderRow={(item, _) => (
+                        <>
+                            <td>{item.name}</td>
+                            <td>{item.description}</td>
+                            <td>{item.quantity}</td>
+                            <td>${item.price}</td>
+                        </>
+                    )} />
+                )}
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
             </div>
-            {loading ? (
-                <Spinner />
-            ) : (
-                <Table columns={columns} data={products} renderRow={(item, index) => (
-                    <>
-                        <td>{item.name}</td>
-                        <td>{item.description}</td>
-                        <td>{item.quantity}</td>
-                        <td>${item.price}</td>
-                    </>
-                )} />
-            )}
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-        </div>
+        </>
     );
 };
 

@@ -1,29 +1,18 @@
 import axios, { AxiosError } from "axios";
 import { FormValues } from "../pages/user/Login";
-import { ISale, ISalesInput } from "../utils/constants";
+import { BACKEND_URL, ISale, ISalesInput } from "../utils/constants";
+
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: BACKEND_URL || "http://localhost:5000",
     headers: {
-        "Cache-Control": "no-store",  // Prevents caching
+        "Cache-Control": "no-store",
         "Pragma": "no-cache",
         "Expires": "0",
     },
     withCredentials: true,
 });
 
-// axiosInstance.interceptors.response.use(
-//     (response) => response,
-//     async (error) => {
-//         if ((error.response?.status === 403 || error.response?.status === 401) && window.location.pathname !== "/login") {
-//             console.log("Redirecting due to 403 error...");
-//             await handleLogout(); // Call the function
-//         }
-//         return Promise.reject(error);
-//     }
-// );
-
-/////////////   Auth   //////////////
 
 export const loginApi = async (loginData: FormValues) => {
     try {
