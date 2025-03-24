@@ -7,9 +7,7 @@ import Pagination from "../../components/Pagination";
 import { ICustomer } from "../../utils/constants";
 import { deleteCustomerApi, getCustomersApi } from "../../services/customerApi";
 import EditCustomer from "./EditCustomer";
-
-
-
+import Navbar from "../../components/Navbar";
 
 const columns = ["Name", "Address", "Mobile Number"];
 
@@ -111,70 +109,73 @@ const ViewCustomers: React.FC = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <div className="mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Customers..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="mb-0">Customer List</h2>
-                <button className="btn btn-success px-4 py-2 fw-bold shadow"
-                    onClick={() => setShowAddCustomer(true)}
-                >
-                    ➕ Add Customer
-                </button>
-            </div>
-            {loading ? <Spinner /> :
-                <Table
-                    columns={columns}
-                    data={customers}
-                    renderRow={(item, index) => (
-                        <>
-                            <td key={`name-${index}`}>{item.name}</td>
-                            <td key={`address-${index}`}>{item.address}</td>
-                            <td key={`mobile-${index}`}>{item.phone}</td>
-                        </>
-                    )}
-                    actions={(item, index) => (
-                        <>
-                            <button key={`edit-${index}`} onClick={() => handleEditClick(item)}>✏️</button>
-                            <button key={`delete-${index}`} onClick={() => deleteItem(item)}>🗑️</button>
-                        </>
-                    )}
-                />
-            }
-            {showAddCustomer && (
-                <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
-                    <AddCustomer onClose={() => setShowAddCustomer(false)} />
-                </div>
-            )}
-            {showEditCustomer && selectedCustomer && (
-                <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
-                    <EditCustomer
-                        customer={selectedCustomer}
-                        onClose={() => setShowEditCustomer(false)}
-                        onUpdateCustomer={(updatedCustomer) => {
-                            setCustomers(prevCustomers =>
-                                prevCustomers.map(customer =>
-                                    customer._id === updatedCustomer._id ? updatedCustomer : customer
-                                )
-                            );
-                            setShowEditCustomer(false);
-                        }}
+        <>
+            <Navbar />
+            <div className="container mt-4">
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Customers..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-            )}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
-        </div>
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h2 className="mb-0">Customer List</h2>
+                    <button className="btn btn-success px-4 py-2 fw-bold shadow"
+                        onClick={() => setShowAddCustomer(true)}
+                    >
+                        ➕ Add Customer
+                    </button>
+                </div>
+                {loading ? <Spinner /> :
+                    <Table
+                        columns={columns}
+                        data={customers}
+                        renderRow={(item, index) => (
+                            <>
+                                <td key={`name-${index}`}>{item.name}</td>
+                                <td key={`address-${index}`}>{item.address}</td>
+                                <td key={`mobile-${index}`}>{item.phone}</td>
+                            </>
+                        )}
+                        actions={(item, index) => (
+                            <>
+                                <button key={`edit-${index}`} onClick={() => handleEditClick(item)}>✏️</button>
+                                <button key={`delete-${index}`} onClick={() => deleteItem(item)}>🗑️</button>
+                            </>
+                        )}
+                    />
+                }
+                {showAddCustomer && (
+                    <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
+                        <AddCustomer onClose={() => setShowAddCustomer(false)} />
+                    </div>
+                )}
+                {showEditCustomer && selectedCustomer && (
+                    <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
+                        <EditCustomer
+                            customer={selectedCustomer}
+                            onClose={() => setShowEditCustomer(false)}
+                            onUpdateCustomer={(updatedCustomer) => {
+                                setCustomers(prevCustomers =>
+                                    prevCustomers.map(customer =>
+                                        customer._id === updatedCustomer._id ? updatedCustomer : customer
+                                    )
+                                );
+                                setShowEditCustomer(false);
+                            }}
+                        />
+                    </div>
+                )}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            </div>
+        </>
     );
 };
 

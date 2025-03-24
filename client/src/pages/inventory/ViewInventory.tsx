@@ -7,7 +7,7 @@ import Spinner from "../../components/Spinner";
 import { IProduct } from "../../utils/constants";
 import EditProduct from "./EditProduct";
 import Pagination from "../../components/Pagination";
-
+import Navbar from "../../components/Navbar";
 
 const columns = ["Name", "Description", "Quantity", "Price"];
 
@@ -122,81 +122,84 @@ const ViewInventory: React.FC = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <div className="mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search Products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="mb-0">Inventory List</h2>
-                <button className="btn btn-success px-4 py-2 fw-bold shadow"
-                    onClick={() => setShowAddProduct(true)}
-                >
-                    ➕ Add Product
-                </button>
-            </div>
-            {loading ?
-                <Spinner />
-                :
-                <Table
-                    columns={columns}
-                    data={products}
-                    renderRow={(item, index) => (
-                        <>
-                            <td key={`name-${index}`}>{item.name}</td>
-                            <td key={`desc-${index}`}>{item.description}</td>
-                            <td key={`qty-${index}`}>{item.quantity}</td>
-                            <td key={`price-${index}`}>${item.price}</td>
-                        </>
-                    )}
-                    actions={(item, index) => (
-                        <>
-                            <button key={`edit-${index}`} onClick={() => handleEditClick(item)}>✏️</button>
-                            <button key={`delete-${index}`} onClick={() => deleteItem(item)}>🗑️</button>
-                        </>
-                    )}
-                />
-
-
-
-            }
-            {/* Show AddProduct Form */}
-            {showAddProduct && (
-                <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
-                    <AddProduct onClose={() => setShowAddProduct(false)} />
-                </div>
-            )}
-
-            {showEditProduct && selectedProduct && (
-                <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
-                    <EditProduct
-                        product={selectedProduct}
-                        onClose={() => setShowEditProduct(false)}
-                        onUpdateProduct={(updatedProduct) => {
-                            console.log("THE Updated Pred in CalVac :", updatedProduct);
-                            setProducts(prevProducts =>
-                                prevProducts.map(product =>
-                                    product._id === updatedProduct._id ? updatedProduct : product
-                                )
-                            );
-                            setShowEditProduct(false);
-                        }}
+        <>
+            <Navbar />
+            <div className="container mt-4">
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search Products..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
-            )}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h2 className="mb-0">Inventory List</h2>
+                    <button className="btn btn-success px-4 py-2 fw-bold shadow"
+                        onClick={() => setShowAddProduct(true)}
+                    >
+                        ➕ Add Product
+                    </button>
+                </div>
+                {loading ?
+                    <Spinner />
+                    :
+                    <Table
+                        columns={columns}
+                        data={products}
+                        renderRow={(item, index) => (
+                            <>
+                                <td key={`name-${index}`}>{item.name}</td>
+                                <td key={`desc-${index}`}>{item.description}</td>
+                                <td key={`qty-${index}`}>{item.quantity}</td>
+                                <td key={`price-${index}`}>${item.price}</td>
+                            </>
+                        )}
+                        actions={(item, index) => (
+                            <>
+                                <button key={`edit-${index}`} onClick={() => handleEditClick(item)}>✏️</button>
+                                <button key={`delete-${index}`} onClick={() => deleteItem(item)}>🗑️</button>
+                            </>
+                        )}
+                    />
 
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
 
-        </div>
+
+                }
+                {/* Show AddProduct Form */}
+                {showAddProduct && (
+                    <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
+                        <AddProduct onClose={() => setShowAddProduct(false)} />
+                    </div>
+                )}
+
+                {showEditProduct && selectedProduct && (
+                    <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded" style={{ zIndex: 1050 }}>
+                        <EditProduct
+                            product={selectedProduct}
+                            onClose={() => setShowEditProduct(false)}
+                            onUpdateProduct={(updatedProduct) => {
+                                console.log("THE Updated Pred in CalVac :", updatedProduct);
+                                setProducts(prevProducts =>
+                                    prevProducts.map(product =>
+                                        product._id === updatedProduct._id ? updatedProduct : product
+                                    )
+                                );
+                                setShowEditProduct(false);
+                            }}
+                        />
+                    </div>
+                )}
+
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+
+            </div>
+        </>
     );
 };
 

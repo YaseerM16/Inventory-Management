@@ -28,3 +28,5 @@ export interface ISalesInput {
     date: Date | "",
     quantity: number
 }
+
+export const BACKEND_URL = "https://inventory-management-3-camc.onrender.com"

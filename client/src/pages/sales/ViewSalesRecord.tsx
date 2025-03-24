@@ -8,6 +8,8 @@ import { getProductsApi } from "../../services/productApi";
 import { getCustomersApi } from "../../services/customerApi";
 import Select from "react-select";
 import { addSalesRecordApi, getSalesApi } from "../../services/userApi";
+import Navbar from "../../components/Navbar";
+
 
 // import { deleteSaleApi, getSalesApi } from "../../services/salesApi";
 getProductsApi
@@ -221,99 +223,102 @@ const ViewSalesRecord: React.FC = () => {
     }
 
     return (
-        <div className="container mt-4">
-            <div className="mb-3">
-                {/* <input
+        <>
+            <Navbar />
+            <div className="container mt-4">
+                <div className="mb-3">
+                    {/* <input
                     type="text"
                     className="form-control"
                     placeholder="Search Sales..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 /> */}
-            </div>
-            <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="mb-0">Sales Records</h2>
-                <button className="btn btn-success px-4 py-2 fw-bold shadow" onClick={() => setShowAddSale(true)}>
-                    ➕ Add Sale Record
-                </button>
-            </div>
-            {/* Add Sale Form */}
-            {showAddSale && (
-                <div
-                    className="position-absolute top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded"
-                    style={{ zIndex: 1050, minWidth: "400px" }}
-                >
-                    <h4 className="mb-3">Add Sale Record</h4>
-
-                    {/* Customer Dropdown */}
-                    <div className="mb-2">
-                        <label className="form-label">Customer Name</label>
-                        <Select
-                            options={customers.map(customer => ({ value: customer._id, label: customer.name, property: "customerId" }))}
-                            onChange={handleSelectChange}
-                            placeholder="Search or select customer..."
-                            isSearchable={true} // Enables search input visibility
-
-                        />
-
-                    </div>
-
-                    {/* Product Dropdown */}
-                    <div className="mb-2">
-                        <label className="form-label">Product Name</label>
-                        <Select
-                            options={products.map(product => ({ value: product._id, label: product.name, property: "productId" }))}
-                            onChange={handleSelectChange}
-                            placeholder="Search or select product..."
-                            isSearchable={true} // Enables search input visibility
-
-                        />
-                    </div>
-
-                    {/* Date Input */}
-                    <div className="mb-2">
-                        <label className="form-label">Date</label>
-                        <input type="date" className="form-control" name="date" onChange={handleChange} />
-                    </div>
-
-                    {/* Quantity Input */}
-                    <div className="mb-2">
-                        <label className="form-label">Quantity</label>
-                        <input type="number" className="form-control" name="quantity" onChange={handleChange} min="1" />
-                    </div>
-
-                    {/* Buttons */}
-                    <div className="d-flex justify-content-end gap-2 mt-3">
-                        <button className="btn btn-secondary" onClick={resetForm}>Cancel</button>
-                        {loading ?
-                            <Spinner /> :
-                            <button className="btn btn-primary" onClick={handleSubmit}>Save Sale</button>
-                        }
-                    </div>
                 </div>
-            )}
-            {loading ? <Spinner /> :
-                <Table
-                    columns={columns}
-                    data={sales}
-                    renderRow={(item, index) => (
-                        <>
-                            <td key={`saleId-${index}`}>{item.saleId}</td>
-                            <td key={`productName-${index}`}>{item.productName}</td>
-                            <td key={`customerName-${index}`}>{item.customerName || "Cash"}</td>
-                            <td key={`quantity-${index}`}>{item.quantity}</td>
-                            <td key={`price-${index}`}>{item.price}</td>
-                            <td key={`date-${index}`}>{new Date(item.date).toLocaleDateString()}</td>
-                        </>
-                    )}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h2 className="mb-0">Sales Records</h2>
+                    <button className="btn btn-success px-4 py-2 fw-bold shadow" onClick={() => setShowAddSale(true)}>
+                        ➕ Add Sale Record
+                    </button>
+                </div>
+                {/* Add Sale Form */}
+                {showAddSale && (
+                    <div
+                        className="position-absolute top-50 start-50 translate-middle bg-white p-4 shadow-lg rounded"
+                        style={{ zIndex: 1050, minWidth: "400px" }}
+                    >
+                        <h4 className="mb-3">Add Sale Record</h4>
+
+                        {/* Customer Dropdown */}
+                        <div className="mb-2">
+                            <label className="form-label">Customer Name</label>
+                            <Select
+                                options={customers.map(customer => ({ value: customer._id, label: customer.name, property: "customerId" }))}
+                                onChange={handleSelectChange}
+                                placeholder="Search or select customer..."
+                                isSearchable={true} // Enables search input visibility
+
+                            />
+
+                        </div>
+
+                        {/* Product Dropdown */}
+                        <div className="mb-2">
+                            <label className="form-label">Product Name</label>
+                            <Select
+                                options={products.map(product => ({ value: product._id, label: product.name, property: "productId" }))}
+                                onChange={handleSelectChange}
+                                placeholder="Search or select product..."
+                                isSearchable={true} // Enables search input visibility
+
+                            />
+                        </div>
+
+                        {/* Date Input */}
+                        <div className="mb-2">
+                            <label className="form-label">Date</label>
+                            <input type="date" className="form-control" name="date" onChange={handleChange} />
+                        </div>
+
+                        {/* Quantity Input */}
+                        <div className="mb-2">
+                            <label className="form-label">Quantity</label>
+                            <input type="number" className="form-control" name="quantity" onChange={handleChange} min="1" />
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="d-flex justify-content-end gap-2 mt-3">
+                            <button className="btn btn-secondary" onClick={resetForm}>Cancel</button>
+                            {loading ?
+                                <Spinner /> :
+                                <button className="btn btn-primary" onClick={handleSubmit}>Save Sale</button>
+                            }
+                        </div>
+                    </div>
+                )}
+                {loading ? <Spinner /> :
+                    <Table
+                        columns={columns}
+                        data={sales}
+                        renderRow={(item, index) => (
+                            <>
+                                <td key={`saleId-${index}`}>{item.saleId}</td>
+                                <td key={`productName-${index}`}>{item.productName}</td>
+                                <td key={`customerName-${index}`}>{item.customerName || "Cash"}</td>
+                                <td key={`quantity-${index}`}>{item.quantity}</td>
+                                <td key={`price-${index}`}>{item.price}</td>
+                                <td key={`date-${index}`}>{new Date(item.date).toLocaleDateString()}</td>
+                            </>
+                        )}
+                    />
+                }
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
                 />
-            }
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
-        </div>
+            </div>
+        </>
     );
 };
 

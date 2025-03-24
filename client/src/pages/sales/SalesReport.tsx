@@ -9,6 +9,7 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable"; // Import autoTable plugin
 import { useAppSelector } from "../../store/TypedHooks";
+import Navbar from "../../components/Navbar";
 
 const columns = ["Sale ID", "Product Name", "Customer Name", "Quantity", "Price", "Date"];
 
@@ -111,32 +112,35 @@ const SalesReport: React.FC = () => {
     };
 
     return (
-        <div className="container mt-4">
-            <div className="flex justify-end space-x-2 mb-4">
-                <button className="btn btn-primary" onClick={printReport}>Print</button>
-                <button className="btn btn-success" onClick={exportToExcel}>Excel</button>
-                <button className="btn btn-danger" onClick={exportToPDF}>PDF</button>
-                <button className="btn btn-warning" onClick={sendEmail}>Email</button>
-            </div>
+        <>
+            <Navbar />
+            <div className="container mt-4">
+                <div className="d-flex justify-end align-items-center mb-3">
+                    <button className="btn btn-primary" onClick={printReport}>Print</button>
+                    <button className="btn btn-success" onClick={exportToExcel}>Excel</button>
+                    <button className="btn btn-danger" onClick={exportToPDF}>PDF</button>
+                    <button className="btn btn-warning" onClick={sendEmail}>Email</button>
+                </div>
 
-            {loading ? <Spinner /> :
-                <Table
-                    columns={columns}
-                    data={sales}
-                    renderRow={(item, index) => (
-                        <>
-                            <td key={`saleId-${index}`}>{item.saleId}</td>
-                            <td key={`productName-${index}`}>{item.productName}</td>
-                            <td key={`customerName-${index}`}>{item.customerName || "Cash"}</td>
-                            <td key={`quantity-${index}`}>{item.quantity}</td>
-                            <td key={`price-${index}`}>{item.price}</td>
-                            <td key={`date-${index}`}>{new Date(item.date).toLocaleDateString()}</td>
-                        </>
-                    )}
-                />
-            }
-            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-        </div>
+                {loading ? <Spinner /> :
+                    <Table
+                        columns={columns}
+                        data={sales}
+                        renderRow={(item, index) => (
+                            <>
+                                <td key={`saleId-${index}`}>{item.saleId}</td>
+                                <td key={`productName-${index}`}>{item.productName}</td>
+                                <td key={`customerName-${index}`}>{item.customerName || "Cash"}</td>
+                                <td key={`quantity-${index}`}>{item.quantity}</td>
+                                <td key={`price-${index}`}>{item.price}</td>
+                                <td key={`date-${index}`}>{new Date(item.date).toLocaleDateString()}</td>
+                            </>
+                        )}
+                    />
+                }
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+            </div>
+        </>
     );
 };
 
