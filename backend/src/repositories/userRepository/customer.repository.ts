@@ -37,7 +37,6 @@ export default class CustomerRepository extends BaseRepository<{
             const totalCustomers = await this.findAll("Customer", queryObj).countDocuments();
 
             const customers = await this.findAll("Customer", queryObj)
-                .sort({ createdAt: -1 })
                 .skip((page - 1) * limit)
                 .limit(parseInt(limit, 10));
 
