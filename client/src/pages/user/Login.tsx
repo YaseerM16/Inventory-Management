@@ -111,13 +111,6 @@ const Login: React.FC = () => {
                     <button type="submit" className="btn btn-primary w-100">
                         Login
                     </button>
-
-                    {/* Signup Button */}
-                    <a href="/signup" className="d-block text-center mt-3">
-                        <button type="button" className="btn btn-secondary w-100">
-                            Signup for a new account
-                        </button>
-                    </a>
                 </form>
             </div>
         </div>
